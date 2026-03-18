@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TP2 — Formulaire d'inscription</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg:       #0b0c0e;
+      --surface:  #111317;
+      --border:   #2a2d35;
+      --gold:     #c9a84c;
+      --gold-dim: #8a6e2f;
+      --text:     #e8e4d8;
+      --muted:    #7a7670;
+      --error:    #e05555;
+      --ok:       #4caf7d;
+      --radius:   4px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Mono', monospace;
+      font-size: 13px;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 60px 20px 80px;
+    }
+
+    /* ── DECORATIVE HEADER ── */
+    .page-header {
+      text-align: center;
+      margin-bottom: 52px;
+    }
+    .page-header .eyebrow {
+      display: inline-block;
+      letter-spacing: .25em;
+      text-transform: uppercase;
+      font-size: 10px;
+      color: var(--gold);
+      border: 1px solid var(--gold-dim);
+      padding: 4px 14px;
+      margin-bottom: 20px;
+    }
+    .page-header h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(34px, 6vw, 58px);
+      font-weight: 600;
+      color: var(--text);
+      line-height: 1.1;
+    }
+    .page-header h1 em {
+      color: var(--gold);
+      font-style: italic;
+    }
+    .page-header .rule {
+      width: 60px;
+      height: 1px;
+      background: var(--gold);
+      margin: 20px auto 0;
+    }
+
+    /* ── FORM SHELL ── */
+    .form-wrap {
+      width: 100%;
+      max-width: 720px;
+    }
+
+    /* ── FIELDSETS ── */
+    fieldset {
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 32px;
+      margin-bottom: 28px;
+      position: relative;
+      transition: border-color .25s;
+    }
+    fieldset:focus-within { border-color: var(--gold-dim); }
+
+    legend {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--gold);
+      padding: 0 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      letter-spacing: .05em;
+    }
+    legend .legend-num {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      color: var(--muted);
+      border: 1px solid var(--border);
+      padding: 2px 6px;
+      border-radius: 2px;
+    }
+
+    /* ── GRID / ROWS ── */
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; }
+    @media(max-width: 560px) {
+      .grid-2, .grid-3 { grid-template-columns: 1fr; }
+    }
+
+    /* ── FIELD ── */
+    .field { display: flex; flex-direction: column; gap: 7px; }
+    .field.full { grid-column: 1 / -1; }
+
+    label {
+      font-size: 10px;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    label .req { color: var(--gold); font-size: 12px; line-height: 1; }
+
+    input, select, textarea {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      color: var(--text);
+      font-family: 'DM Mono', monospace;
+      font-size: 13px;
+      padding: 11px 14px;
+      width: 100%;
+      outline: none;
+      transition: border-color .2s, box-shadow .2s;
+      appearance: none;
+      -webkit-appearance: none;
+    }
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--gold);
+      box-shadow: 0 0 0 3px rgba(201,168,76,.08);
+    }
+    input::placeholder, textarea::placeholder { color: var(--border); }
+
+    /* custom select arrow */
+    .select-wrap { position: relative; }
+    .select-wrap::after {
+      content: '▾';
+      position: absolute;
+      right: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--gold);
+      pointer-events: none;
+      font-size: 12px;
+    }
+
+    textarea { resize: vertical; min-height: 100px; line-height: 1.6; }
+
+    /* char counter */
+    .char-counter {
+      font-size: 10px;
+      color: var(--muted);
+      text-align: right;
+      margin-top: -4px;
+    }
+    .char-counter.warn { color: var(--gold); }
+    .char-counter.over { color: var(--error); }
+
+    /* ── HINT & ERROR ── */
+    .hint {
+      font-size: 10px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+    .error-msg {
+      font-size: 10px;
+      color: var(--error);
+      display: none;
+      align-items: center;
+      gap: 4px;
+    }
+    .error-msg::before { content: '✕'; font-size: 9px; }
+    input:invalid:not(:placeholder-shown) ~ .error-msg,
+    input.touched:invalid ~ .error-msg,
+    select.touched:invalid ~ .error-msg { display: flex; }
+    input:invalid:not(:placeholder-shown),
+    input.touched:invalid,
+    select.touched:invalid {
+      border-color: var(--error);
+    }
+    input:valid:not(:placeholder-shown),
+    input.touched:valid { border-color: var(--ok); }
+
+    /* custom validity for password-confirm */
+    input.invalid { border-color: var(--error) !important; }
+    input.valid   { border-color: var(--ok)   !important; }
+    .custom-error { display: flex; }
+
+    /* ── PASSWORD STRENGTH ── */
+    .strength-bar {
+      display: flex;
+      gap: 4px;
+      margin-top: 4px;
+    }
+    .strength-bar span {
+      flex: 1;
+      height: 3px;
+      border-radius: 2px;
+      background: var(--border);
+      transition: background .3s;
+    }
+    .strength-bar[data-level="1"] span:nth-child(1) { background: var(--error); }
+    .strength-bar[data-level="2"] span:nth-child(-n+2) { background: var(--gold-dim); }
+    .strength-bar[data-level="3"] span:nth-child(-n+3) { background: var(--gold); }
+    .strength-bar[data-level="4"] span { background: var(--ok); }
+    .strength-label { font-size: 10px; color: var(--muted); margin-top: 2px; }
+
+    /* ── RADIO & CHECKBOX GROUP ── */
+    .radio-group, .check-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 2px;
+    }
+
+    .radio-option, .check-option {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      padding: 9px 16px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      transition: border-color .2s, background .2s;
+      user-select: none;
+      font-size: 12px;
+      color: var(--text);
+    }
+    .radio-option:hover, .check-option:hover {
+      border-color: var(--gold-dim);
+      background: rgba(201,168,76,.04);
+    }
+    .radio-option input, .check-option input {
+      width: 14px; height: 14px;
+      accent-color: var(--gold);
+      cursor: pointer;
+      padding: 0;
+      flex-shrink: 0;
+    }
+    .radio-option:has(input:checked),
+    .check-option:has(input:checked) {
+      border-color: var(--gold);
+      background: rgba(201,168,76,.07);
+      color: var(--gold);
+    }
+
+    /* ── FILE UPLOAD ── */
+    .file-zone {
+      border: 1px dashed var(--border);
+      border-radius: var(--radius);
+      padding: 28px;
+      text-align: center;
+      cursor: pointer;
+      position: relative;
+      transition: border-color .2s, background .2s;
+    }
+    .file-zone:hover { border-color: var(--gold-dim); background: rgba(201,168,76,.03); }
+    .file-zone input[type="file"] {
+      position: absolute; inset: 0; opacity: 0; cursor: pointer;
+      width: 100%; height: 100%; padding: 0; border: none;
+    }
+    .file-zone .file-icon { font-size: 28px; margin-bottom: 8px; opacity: .5; }
+    .file-zone .file-text { font-size: 12px; color: var(--muted); }
+    .file-zone .file-name { font-size: 11px; color: var(--gold); margin-top: 6px; display: none; }
+    .file-zone.has-file { border-color: var(--ok); background: rgba(76,175,125,.04); }
+    .file-zone.has-file .file-icon { opacity: 1; }
+    .file-zone.has-file .file-name { display: block; }
+
+    /* ── CGU ── */
+    .cgu-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 20px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      cursor: pointer;
+      transition: border-color .2s;
+    }
+    .cgu-row:has(input:checked) { border-color: var(--gold); }
+    .cgu-row input {
+      width: 16px; height: 16px; flex-shrink: 0;
+      margin-top: 1px;
+      accent-color: var(--gold);
+      padding: 0; cursor: pointer;
+    }
+    .cgu-text { font-size: 12px; color: var(--muted); line-height: 1.6; }
+    .cgu-text a { color: var(--gold); text-decoration: none; }
+    .cgu-text a:hover { text-decoration: underline; }
+
+    /* ── SUBMIT ── */
+    .submit-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+      margin-top: 8px;
+    }
+
+    button[type="submit"] {
+      background: transparent;
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      padding: 16px 56px;
+      cursor: pointer;
+      border-radius: var(--radius);
+      position: relative;
+      overflow: hidden;
+      transition: color .3s;
+    }
+    button[type="submit"]::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--gold);
+      transform: translateX(-101%);
+      transition: transform .35s cubic-bezier(.65,0,.35,1);
+      z-index: 0;
+    }
+    button[type="submit"]:hover { color: var(--bg); }
+    button[type="submit"]:hover::before { transform: translateX(0); }
+    button[type="submit"] span { position: relative; z-index: 1; }
+
+    /* ── SUCCESS OVERLAY ── */
+    #success-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(11,12,14,.92);
+      z-index: 999;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      backdrop-filter: blur(6px);
+    }
+    #success-overlay.show { display: flex; animation: fadeIn .4s; }
+    @keyframes fadeIn { from { opacity:0 } to { opacity:1 } }
+    .success-icon { font-size: 52px; animation: pop .4s .1s both; }
+    @keyframes pop { from { transform: scale(.5); opacity:0 } to { transform: scale(1); opacity:1 } }
+    .success-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 36px;
+      color: var(--gold);
+    }
+    .success-sub { font-size: 12px; color: var(--muted); }
+    .success-close {
+      margin-top: 10px;
+      background: none;
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      padding: 10px 28px;
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      letter-spacing: .15em;
+      cursor: pointer;
+      border-radius: var(--radius);
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── SUCCESS OVERLAY ── -->
+<div id="success-overlay" role="dialog" aria-modal="true" aria-label="Inscription réussie">
+  <div class="success-icon">✦</div>
+  <p class="success-title">Inscription réussie</p>
+  <p class="success-sub">Votre compte a bien été créé.</p>
+  <button class="success-close" onclick="document.getElementById('success-overlay').classList.remove('show')">Fermer</button>
+</div>
+
+<!-- ── HEADER ── -->
+<header class="page-header">
+  <h1>Formulaire<br/><em>d'inscription</em></h1>
+  <div class="rule"></div>
+</header>
+
+<!-- ── FORM ── -->
+<main class="form-wrap">
+<form id="signup-form" novalidate autocomplete="on">
+
+  <!-- ① Informations personnelles -->
+  <fieldset>
+    <legend>
+      <span class="legend-num">01</span>
+      Informations personnelles
+    </legend>
+
+    <div class="grid-2" style="margin-bottom:20px">
+      <div class="field">
+        <label for="prenom">Prénom <span class="req">*</span></label>
+        <input type="text" id="prenom" name="prenom"
+               placeholder="Jean" required
+               autocomplete="given-name"
+               minlength="2" maxlength="50" />
+        <span class="error-msg">Prénom requis (min. 2 caractères)</span>
+      </div>
+
+      <div class="field">
+        <label for="nom">Nom <span class="req">*</span></label>
+        <input type="text" id="nom" name="nom"
+               placeholder="Dupont" required
+               autocomplete="family-name"
+               minlength="2" maxlength="50" />
+        <span class="error-msg">Nom requis (min. 2 caractères)</span>
+      </div>
+    </div>
+
+    <div class="grid-2">
+      <div class="field">
+        <label for="email">Adresse e-mail <span class="req">*</span></label>
+        <input type="email" id="email" name="email"
+               placeholder="jean.dupont@example.com" required
+               autocomplete="email" />
+        <span class="error-msg">Format e-mail invalide</span>
+      </div>
+
+      <div class="field">
+        <label for="telephone">Téléphone <span class="req">*</span></label>
+        <input type="tel" id="telephone" name="telephone"
+               placeholder="06 12 34 56 78" required
+               autocomplete="tel"
+               pattern="^(?:(?:\+|00)33|0)\s*[1-9](?:[\s.-]?\d{2}){4}$" />
+        <span class="error-msg">Format invalide (ex : 06 12 34 56 78)</span>
+        <span class="hint">Format français (+33, 06, 07…)</span>
+      </div>
+    </div>
+  </fieldset>
+
+  <!-- ② Date de naissance -->
+  <fieldset>
+    <legend>
+      <span class="legend-num">02</span>
+      Date de naissance
+    </legend>
+
+    <div class="field" style="max-width:260px">
+      <label for="dob">Date de naissance <span class="req">*</span></label>
+      <input type="date" id="dob" name="dob" required
+             autocomplete="bday" />
+      <span id="dob-error" class="error-msg">Vous devez avoir au moins 18 ans</span>
+      <span class="hint">Âge minimum : 18 ans</span>
+    </div>
+  </fieldset>
+
+  <!-- ③ Sécurité -->
+  <fieldset>
+    <legend>
+      <span class="legend-num">03</span>
+      Mot de passe
+    </legend>
+
+    <div class="grid-2">
+      <div class="field">
+        <label for="password">Mot de passe <span class="req">*</span></label>
+        <input type="password" id="password" name="password"
+               placeholder="••••••••" required
+               autocomplete="new-password"
+               pattern="^(?=.*[A-Z])(?=.*\d).{8,}$" />
+        <div class="strength-bar" id="strength-bar">
+          <span></span><span></span><span></span><span></span>
+        </div>
+        <p class="strength-label" id="strength-label"></p>
+        <span class="error-msg">Min. 8 car., 1 majuscule, 1 chiffre</span>
+        <span class="hint">Au moins 8 caractères, 1 majuscule, 1 chiffre</span>
+      </div>
+
+      <div class="field">
+        <label for="confirm">Confirmer <span class="req">*</span></label>
+        <input type="password" id="confirm" name="confirm"
+               placeholder="••••••••" required
+               autocomplete="new-password" />
+        <span id="confirm-error" class="error-msg custom-error" style="display:none">
+          Les mots de passe ne correspondent pas
+        </span>
+      </div>
+    </div>
+  </fieldset>
+
+  <!-- ④ Localisation -->
+  <fieldset>
+    <legend>
+      <span class="legend-num">04</span>
+      Localisation
+    </legend>
+
+    <div class="field" style="max-width:360px">
+      <label for="pays">Pays <span class="req">*</span></label>
+      <div class="select-wrap">
+        <select id="pays" name="pays" required autocomplete="country">
+          <option value="" disabled selected>— Choisir un pays —</option>
+          <option value="FR">🇫🇷 France</option>
+          <option value="BE">🇧🇪 Belgique</option>
+          <option value="CH">🇨🇭 Suisse</option>
+          <option value="LU">🇱🇺 Luxembourg</option>
+          <option value="MA">🇲🇦 Maroc</option>
+          <option value="DZ">🇩🇿 Algérie</option>
+          <option value="TN">🇹🇳 Tunisie</option>
+          <option value="SN">🇸🇳 Sénégal</option>
+          <option value="CI">🇨🇮 Côte d'Ivoire</option>
+          <option value="CA">🇨🇦 Canada</option>
+          <option value="OTHER">Autre</option>
+        </select>
+      </div>
+      <!-- datalist pour "autre pays" -->
+      <input type="text" id="autre-pays" name="autre-pays"
+             list="pays-list" placeholder="Saisir un autre pays…"
+             style="margin-top:10px;display:none"
+             autocomplete="country-name" />
+      <datalist id="pays-list">
+        <option value="Allemagne">
+        <option value="Espagne">
+        <option value="Italie">
+        <option value="Portugal">
+        <option value="Pays-Bas">
+        <option value="Royaume-Uni">
+        <option value="États-Unis">
+        <option value="Brésil">
+        <option value="Mexique">
+        <option value="Japon">
+        <option value="Chine">
+        <option value="Inde">
+      </datalist>
+      <span class="error-msg">Veuillez sélectionner un pays</span>
+    </div>
+  </fieldset>
+
+  <!-- ⑤ Profil -->
+  <fieldset>
+    <legend>
+      <span class="legend-num">05</span>
+      Profil
+    </legend>
+
+    <!-- Genre -->
+    <div class="field" style="margin-bottom:28px">
+      <label>Genre <span class="req">*</span></label>
+      <div class="radio-group" id="genre-group">
+        <label class="radio-option">
+          <input type="radio" name="genre" value="femme" required /> Femme
+        </label>
+        <label class="radio-option">
+          <input type="radio" name="genre" value="homme" /> Homme
+        </label>
+
+      </div>
+      <span id="genre-error" class="error-msg" style="display:none">Veuillez sélectionner un genre</span>
+    </div>
+
+    <!-- Centres d'intérêt -->
+    <div class="field">
+      <label>Centres d'intérêt</label>
+      <div class="check-group">
+        <label class="check-option"><input type="checkbox" name="interets" value="tech" /> 💻 Technologie</label>
+        <label class="check-option"><input type="checkbox" name="interets" value="musique" /> 🎵 Musique</label>
+        <label class="check-option"><input type="checkbox" name="interets" value="sport" /> ⚽ Sport</label>
+        <label class="check-option"><input type="checkbox" name="interets" value="voyage" /> ✈️ Voyage</label>
+        <label class="check-option"><input type="checkbox" name="interets" value="art" /> 🎨 Art &amp; Design</label>
+        <label class="check-option"><input type="checkbox" name="interets" value="cuisine" /> 🍳 Cuisine</label>
+        <label class="check-option"><input type="checkbox" name="interets" value="lecture" /> 📚 Lecture</label>
+        <label class="check-option"><input type="checkbox" name="interets" value="cinema" /> 🎬 Cinéma</label>
+      </div>
+    </div>
+  </fieldset>
+
+  <!-- ⑥ À propos -->
+  <fieldset>
+    <legend>
+      <span class="legend-num">06</span>
+      À propos de vous
+    </legend>
+
+    <div class="field full">
+      <label for="bio">Biographie <span class="req">*</span></label>
+      <textarea id="bio" name="bio"
+                placeholder="Décrivez-vous en quelques mots…"
+                required maxlength="500"
+                autocomplete="off"></textarea>
+      <p class="char-counter" id="bio-counter">0 / 500</p>
+      <span class="error-msg">Biographie requise</span>
+    </div>
+
+    <div class="field" style="margin-top:20px">
+      <label>Photo de profil</label>
+      <div class="file-zone" id="file-zone">
+        <input type="file" id="avatar" name="avatar"
+               accept="image/png, image/jpeg, image/webp"
+               aria-label="Uploader une photo de profil" />
+        <div class="file-icon">📷</div>
+        <p class="file-text">Glisser une image ici ou <u>parcourir</u></p>
+        <p class="file-text" style="font-size:10px;margin-top:4px">JPG, PNG, WEBP — max 5 Mo</p>
+        <p class="file-name" id="file-name"></p>
+      </div>
+    </div>
+  </fieldset>
+
+  <!-- ⑦ CGU -->
+  <fieldset>
+    <legend>
+      <span class="legend-num">07</span>
+      Conditions générales
+    </legend>
+
+    <label class="cgu-row">
+      <input type="checkbox" id="cgu" name="cgu" required />
+      <span class="cgu-text">
+        J'ai lu et j'accepte les <a href="#" onclick="return false">Conditions Générales d'Utilisation</a>
+        et la <a href="#" onclick="return false">Politique de confidentialité</a>.
+        Ce champ est obligatoire pour créer votre compte.
+      </span>
+    </label>
+    <span id="cgu-error" class="error-msg" style="display:none;margin-top:10px">Vous devez accepter les CGU</span>
+  </fieldset>
+
+  <!-- SUBMIT -->
+  <div class="submit-wrap">
+    <button type="submit"><span>Créer mon compte</span></button>
+    <p style="font-size:10px;color:var(--muted)">
+      Les champs marqués <span style="color:var(--gold)">*</span> sont obligatoires
+    </p>
+  </div>
+
+</form>
+</main>
+
+<script>
+  /* ── UTILS ── */
+  const $ = id => document.getElementById(id);
+
+  /* ── TOUCH ON BLUR ── */
+  document.querySelectorAll('input, select, textarea').forEach(el => {
+    el.addEventListener('blur', () => el.classList.add('touched'));
+  });
+
+  /* ── PASSWORD STRENGTH ── */
+  const pwdInput  = $('password');
+  const bar       = $('strength-bar');
+  const barLabel  = $('strength-label');
+  const levels    = ['', 'Faible', 'Moyen', 'Fort', 'Très fort'];
+  const colors    = ['', '#e05555', '#c9a84c', '#c9a84c', '#4caf7d'];
+
+  function calcStrength(v) {
+    let s = 0;
+    if (v.length >= 8)          s++;
+    if (/[A-Z]/.test(v))        s++;
+    if (/\d/.test(v))           s++;
+    if (/[^A-Za-z0-9]/.test(v)) s++;
+    return s;
+  }
+
+  pwdInput.addEventListener('input', () => {
+    const v = pwdInput.value;
+    const s = v ? calcStrength(v) : 0;
+    bar.dataset.level = v ? s : '';
+    barLabel.textContent = v ? levels[s] : '';
+    barLabel.style.color = v ? colors[s] : '';
+  });
+
+  /* ── CONFIRM PASSWORD ── */
+  const confirmInput = $('confirm');
+  const confirmErr   = $('confirm-error');
+
+  function checkConfirm() {
+    if (!confirmInput.value) return;
+    const match = pwdInput.value === confirmInput.value;
+    confirmInput.classList.toggle('invalid', !match);
+    confirmInput.classList.toggle('valid', match);
+    confirmErr.style.display = match ? 'none' : 'flex';
+  }
+  confirmInput.addEventListener('input', checkConfirm);
+  pwdInput.addEventListener('input', () => { if (confirmInput.value) checkConfirm(); });
+
+  /* ── AGE MINIMUM 18 ANS ── */
+  const dobInput  = $('dob');
+  const dobError  = $('dob-error');
+
+  function setDobMax() {
+    const d = new Date();
+    d.setFullYear(d.getFullYear() - 18);
+    dobInput.max = d.toISOString().split('T')[0];
+    dobInput.min = '1900-01-01';
+  }
+  setDobMax();
+
+  dobInput.addEventListener('change', () => {
+    dobInput.classList.add('touched');
+    const val = dobInput.value;
+    if (!val) return;
+    const birth = new Date(val);
+    const cutoff = new Date(dobInput.max);
+    const tooYoung = birth > cutoff;
+    dobInput.classList.toggle('invalid', tooYoung);
+    dobInput.classList.toggle('valid', !tooYoung);
+    dobError.style.display = tooYoung ? 'flex' : 'none';
+    dobInput.setCustomValidity(tooYoung ? 'Âge minimum 18 ans' : '');
+  });
+
+  /* ── PAYS "AUTRE" ── */
+  const paysSelect = $('pays');
+  const autrePays  = $('autre-pays');
+
+  paysSelect.addEventListener('change', () => {
+    paysSelect.classList.add('touched');
+    autrePays.style.display = paysSelect.value === 'OTHER' ? 'block' : 'none';
+    if (paysSelect.value === 'OTHER') autrePays.focus();
+  });
+
+  /* ── BIO CHAR COUNTER ── */
+  const bio        = $('bio');
+  const bioCounter = $('bio-counter');
+
+  bio.addEventListener('input', () => {
+    const len = bio.value.length;
+    const max = parseInt(bio.maxLength);
+    bioCounter.textContent = `${len} / ${max}`;
+    bioCounter.className = 'char-counter' +
+      (len >= max ? ' over' : len >= max * .85 ? ' warn' : '');
+  });
+
+  /* ── FILE UPLOAD DISPLAY ── */
+  const fileInput  = $('avatar');
+  const fileZone   = $('file-zone');
+  const fileName   = $('file-name');
+
+  fileInput.addEventListener('change', () => {
+    const f = fileInput.files[0];
+    if (f) {
+      fileName.textContent = `✓ ${f.name}`;
+      fileZone.classList.add('has-file');
+    } else {
+      fileName.textContent = '';
+      fileZone.classList.remove('has-file');
+    }
+  });
+
+  /* ── SUBMIT VALIDATION ── */
+  $('signup-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    let valid = true;
+
+    /* mark all touched */
+    this.querySelectorAll('input, select, textarea').forEach(el => el.classList.add('touched'));
+
+    /* genre */
+    const genreChecked = this.querySelector('input[name="genre"]:checked');
+    $('genre-error').style.display = genreChecked ? 'none' : 'flex';
+    if (!genreChecked) valid = false;
+
+    /* CGU */
+    const cguChecked = $('cgu').checked;
+    $('cgu-error').style.display = cguChecked ? 'none' : 'flex';
+    if (!cguChecked) valid = false;
+
+    /* confirm pwd */
+    if (pwdInput.value !== confirmInput.value) {
+      confirmErr.style.display = 'flex';
+      valid = false;
+    }
+
+    /* native validity */
+    if (!this.checkValidity()) valid = false;
+
+    /* DOB */
+    if (dobInput.value && dobInput.validity.customError) valid = false;
+
+    if (valid) {
+      $('success-overlay').classList.add('show');
+      this.reset();
+      /* reset UI state */
+      bar.dataset.level = '';
+      barLabel.textContent = '';
+      bioCounter.textContent = '0 / 500';
+      fileZone.classList.remove('has-file');
+      fileName.textContent = '';
+      autrePays.style.display = 'none';
+      confirmErr.style.display = 'none';
+      dobError.style.display = 'none';
+      document.querySelectorAll('input, select, textarea').forEach(el => {
+        el.classList.remove('touched','valid','invalid');
+      });
+    }
+  });
+</script>
+</body>
+</html>
