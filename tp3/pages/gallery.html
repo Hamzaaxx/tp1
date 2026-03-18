@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Galerie — Vela Voyages</title>
+  <meta name="description" content="Galerie photo de voyages Vela : Japon, Afrique, Patagonie, Islande, Océanie. Inspiration pour votre prochain voyage sur-mesure." />
+  <meta property="og:title" content="Galerie — Vela Voyages" />
+  <meta property="og:description" content="Inspirez-vous : photos de voyages sur-mesure à travers le monde." />
+  <meta property="og:image" content="https://picsum.photos/seed/vela-gal-og/1200/630" />
+  <meta property="og:url" content="https://vela-voyages.fr/pages/gallery.html" />
+  <link rel="canonical" href="https://vela-voyages.fr/pages/gallery.html" />
+  <link rel="stylesheet" href="../css/style.css" />
+  <style>
+    .filter-bar { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:40px; }
+    .fbtn {
+      font-family:var(--sans); font-size:11px; font-weight:500;
+      letter-spacing:.14em; text-transform:uppercase;
+      border:1.5px solid var(--sand); padding:8px 20px;
+      background:transparent; color:var(--muted); cursor:pointer; transition:.2s; border-radius:1px;
+    }
+    .fbtn:hover,.fbtn.active { background:var(--navy); color:var(--ivory-lt); border-color:var(--navy); }
+
+    .gallery-grid { columns:3; column-gap:14px; }
+    @media(max-width:900px){.gallery-grid{columns:2;}}
+    @media(max-width:480px){.gallery-grid{columns:1;}}
+
+    .gallery-item { break-inside:avoid; margin-bottom:14px; position:relative; overflow:hidden; cursor:pointer; }
+    .gallery-item img { width:100%; display:block; filter:saturate(.9); transition:transform .5s, filter .4s; }
+    .gallery-item:hover img { transform:scale(1.05); filter:saturate(1.1); }
+    .gallery-overlay {
+      position:absolute; inset:0;
+      background:linear-gradient(transparent 50%, rgba(13,27,46,.78) 100%);
+      opacity:0; transition:opacity .3s;
+      display:flex; flex-direction:column; justify-content:flex-end; padding:20px;
+    }
+    .gallery-item:hover .gallery-overlay { opacity:1; }
+    .gal-dest { font-family:var(--serif); font-size:17px; font-weight:700; color:var(--ivory-lt); }
+    .gal-cat { font-size:10px; letter-spacing:.2em; text-transform:uppercase; color:var(--gold); margin-top:3px; }
+
+    .featured-banner {
+      position:relative; overflow:hidden; height:480px;
+      margin-bottom:64px; cursor:pointer;
+    }
+    .featured-banner picture img { width:100%; height:100%; object-fit:cover; transition:transform .7s; }
+    .featured-banner:hover picture img { transform:scale(1.04); }
+    .featured-banner-overlay {
+      position:absolute; inset:0;
+      background:linear-gradient(90deg, rgba(13,27,46,.85) 0%, rgba(13,27,46,.3) 60%, transparent 100%);
+      display:flex; align-items:flex-end; padding:48px;
+    }
+    .featured-info { max-width: 52ch; }
+    .featured-info .eyebrow { color:var(--gold); }
+    .featured-info h2 { color:var(--ivory-lt); font-size:clamp(24px,4vw,40px); margin:8px 0 16px; }
+    .featured-info p { color:rgba(248,244,236,.7); font-size:14px; margin-bottom:24px; }
+    @media(max-width:600px){ .featured-banner{height:320px;} .featured-banner-overlay{padding:24px;} }
+  </style>
+</head>
+<body class="page-body">
+<script src="../js/shared-nav.js"></script>
+
+<section class="page-hero" data-title="Galerie">
+  <div class="page-hero-bg"></div>
+  <div class="container">
+    <span class="eyebrow">Nos voyages en images</span>
+    <h1>Galerie</h1>
+    <p>Des moments capturés aux quatre coins du monde par nos voyageurs.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+
+    <!-- FEATURED -->
+    <span class="eyebrow reveal">À la une</span>
+    <div class="featured-banner reveal d1">
+      <picture>
+        <source media="(max-width:600px)" srcset="https://picsum.photos/seed/gfeat/600/400 600w" />
+        <source media="(max-width:900px)" srcset="https://picsum.photos/seed/gfeat/900/480 900w" />
+        <img src="https://picsum.photos/seed/gfeat/1400/700"
+             srcset="https://picsum.photos/seed/gfeat/600/400 600w, https://picsum.photos/seed/gfeat/900/480 900w, https://picsum.photos/seed/gfeat/1400/700 1400w"
+             sizes="100vw" alt="Coucher de soleil sur le lac Titicaca au Pérou"
+             width="1400" height="700" loading="eager" />
+      </picture>
+      <div class="featured-banner-overlay">
+        <div class="featured-info">
+          <span class="eyebrow">Voyage à la une · 2025</span>
+          <h2>Pérou — Lac Titicaca au crépuscule</h2>
+          <p>Un moment suspendu à 3 800 m d'altitude. Ce coucher de soleil a été photographié par notre voyageur Marc, lors de son circuit de 15 jours.</p>
+          <a href="../pages/contact.html" class="btn btn-gold"><span>Préparer mon voyage →</span></a>
+        </div>
+      </div>
+    </div>
+
+    <!-- FILTER -->
+    <div class="filter-bar" role="group" aria-label="Filtrer par destination">
+      <button class="fbtn active" data-cat="all">Tous</button>
+      <button class="fbtn" data-cat="asie">Asie</button>
+      <button class="fbtn" data-cat="afrique">Afrique</button>
+      <button class="fbtn" data-cat="amerique">Amériques</button>
+      <button class="fbtn" data-cat="arctique">Arctique</button>
+      <button class="fbtn" data-cat="oceanie">Océanie</button>
+    </div>
+
+    <!-- GALLERY -->
+    <div class="gallery-grid" id="gallery">
+
+      <figure class="gallery-item" data-cat="asie">
+        <picture>
+          <source media="(max-width:480px)" srcset="https://picsum.photos/seed/vg1/400/500 400w" />
+          <img src="https://picsum.photos/seed/vg1/600/750"
+               srcset="https://picsum.photos/seed/vg1/400/500 400w, https://picsum.photos/seed/vg1/600/750 600w"
+               sizes="33vw" alt="Torii rouge du sanctuaire Fushimi Inari, Kyoto, Japon"
+               width="600" height="750" loading="lazy" />
+        </picture>
+        <div class="gallery-overlay"><div class="gal-dest">Kyoto, Japon</div><div class="gal-cat">Asie</div></div>
+      </figure>
+
+      <figure class="gallery-item" data-cat="afrique">
+        <picture>
+          <source media="(max-width:480px)" srcset="https://picsum.photos/seed/vg2/400/280 400w" />
+          <img src="https://picsum.photos/seed/vg2/600/420"
+               srcset="https://picsum.photos/seed/vg2/400/280 400w, https://picsum.photos/seed/vg2/600/420 600w"
+               sizes="33vw" alt="Éléphants en migration dans le Masaï Mara, Kenya"
+               width="600" height="420" loading="lazy" />
+        </picture>
+        <div class="gallery-overlay"><div class="gal-dest">Masaï Mara, Kenya</div><div class="gal-cat">Afrique</div></div>
+      </figure>
+
+      <figure class="gallery-item" data-cat="arctique">
+        <picture>
+          <source media="(max-width:480px)" srcset="https://picsum.photos/seed/vg3/400/600 400w" />
+          <img src="https://picsum.photos/seed/vg3/600/900"
+               srcset="https://picsum.photos/seed/vg3/400/600 400w, https://picsum.photos/seed/vg3/600/900 600w"
+               sizes="33vw" alt="Aurores boréales vertes au-dessus d'un lac en Islande"
+               width="600" height="900" loading="lazy" />
+        </picture>
+        <div class="gallery-overlay"><div class="gal-dest">Islande en hiver</div><div class="gal-cat">Arctique</div></div>
+      </figure>
+
+      <figure class="gallery-item" data-cat="amerique">
+        <picture>
+          <source media="(max-width:480px)" srcset="https://picsum.photos/seed/vg4/400/300 400w" />
+          <img src="https://picsum.photos/seed/vg4/600/450"
+               srcset="https://picsum.photos/seed/vg4/400/300 400w, https://picsum.photos/seed/vg4/600/450 600w"
+               sizes="33vw" alt="Torres del Paine au lever du soleil, Patagonie, Chili"
+               width="600" height="450" loading="lazy" />
+        </picture>
+        <div class="gallery-overlay"><div class="gal-dest">Patagonie, Chili</div><div class="gal-cat">Amériques</div></div>
+      </figure>
+
+      <figure class="gallery-item" data-cat="oceanie">
+        <picture>
+          <source media="(max-width:480px)" srcset="https://picsum.photos/seed/vg5/400/550 400w" />
+          <img src="https://picsum.photos/seed/vg5/600/800"
+               srcset="https://picsum.photos/seed/vg5/400/550 400w, https://picsum.photos/seed/vg5/600/800 600w"
+               sizes="33vw" alt="Lagon turquoise de Bora Bora, Polynésie française"
+               width="600" height="800" loading="lazy" />
+        </picture>
+        <div class="gallery-overlay"><div class="gal-dest">Bora Bora, Polynésie</div><div class="gal-cat">Océanie</div></div>
+      </figure>
+
+      <figure class="gallery-item" data-cat="asie">
+        <picture>
+          <source media="(max-width:480px)" srcset="https://picsum.photos/seed/vg6/400/320 400w" />
+          <img src="https://picsum.photos/seed/vg6/600/480"
+               srcset="https://picsum.photos/seed/vg6/400/320 400w, https://picsum.photos/seed/vg6/600/480 600w"
+               sizes="33vw" alt="Rizières en terrasses de Bali, Indonésie"
+               width="600" height="480" loading="lazy" />
+        </picture>
+        <div class="gallery-overlay"><div class="gal-dest">Bali, Indonésie</div><div class="gal-cat">Asie</div></div>
+      </figure>
+
+      <figure class="gallery-item" data-cat="afrique">
+        <picture>
+          <source media="(max-width:480px)" srcset="https://picsum.photos/seed/vg7/400/500 400w" />
+          <img src="https://picsum.photos/seed/vg7/600/750"
+               srcset="https://picsum.photos/seed/vg7/400/500 400w, https://picsum.photos/seed/vg7/600/750 600w"
+               sizes="33vw" alt="Gorille des montagnes dans la forêt impénétrable, Rwanda"
+               width="600" height="750" loading="lazy" />
+        </picture>
+        <div class="gallery-overlay"><div class="gal-dest">Rwanda, Gorilles</div><div class="gal-cat">Afrique</div></div>
+      </figure>
+
+      <figure class="gallery-item" data-cat="amerique">
+        <picture>
+          <source media="(max-width:480px)" srcset="https://picsum.photos/seed/vg8/400/280 400w" />
+          <img src="https://picsum.photos/seed/vg8/600/420"
+               srcset="https://picsum.photos/seed/vg8/400/280 400w, https://picsum.photos/seed/vg8/600/420 600w"
+               sizes="33vw" alt="Machu Picchu dans la brume matinale, Pérou"
+               width="600" height="420" loading="lazy" />
+        </picture>
+        <div class="gallery-overlay"><div class="gal-dest">Machu Picchu, Pérou</div><div class="gal-cat">Amériques</div></div>
+      </figure>
+
+      <figure class="gallery-item" data-cat="arctique">
+        <picture>
+          <source media="(max-width:480px)" srcset="https://picsum.photos/seed/vg9/400/500 400w" />
+          <img src="https://picsum.photos/seed/vg9/600/750"
+               srcset="https://picsum.photos/seed/vg9/400/500 400w, https://picsum.photos/seed/vg9/600/750 600w"
+               sizes="33vw" alt="Ours polaire sur la banquise du Svalbard, Norvège"
+               width="600" height="750" loading="lazy" />
+        </picture>
+        <div class="gallery-overlay"><div class="gal-dest">Svalbard, Norvège</div><div class="gal-cat">Arctique</div></div>
+      </figure>
+
+    </div>
+  </div>
+</section>
+
+<script src="../js/main.js"></script>
+<script>
+  document.querySelectorAll('.fbtn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.fbtn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const cat = btn.dataset.cat;
+      document.querySelectorAll('.gallery-item').forEach(item => {
+        const show = cat === 'all' || item.dataset.cat === cat;
+        item.style.display = show ? '' : 'none';
+        if (show) item.style.animation = 'fadeUp .4s ease both';
+      });
+    });
+  });
+</script>
+</body>
+</html>

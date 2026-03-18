@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact — Vela Voyages</title>
+  <meta name="description" content="Contactez Vela Voyages pour votre projet de voyage sur-mesure. Devis gratuit, réponse sous 24h." />
+  <meta property="og:title" content="Contact — Vela Voyages" />
+  <meta property="og:description" content="Parlez-nous de vos rêves de voyage. Devis gratuit sous 24h." />
+  <meta property="og:image" content="https://picsum.photos/seed/vela-contact-og/1200/630" />
+  <meta property="og:url" content="https://vela-voyages.fr/pages/contact.html" />
+  <link rel="canonical" href="https://vela-voyages.fr/pages/contact.html" />
+  <link rel="stylesheet" href="../css/style.css" />
+  <style>
+    .contact-layout { display:grid; grid-template-columns:3fr 2fr; gap:80px; align-items:start; }
+    @media(max-width:900px){ .contact-layout{grid-template-columns:1fr;gap:56px;} }
+
+    /* radio chips */
+    .chips { display:flex; gap:8px; flex-wrap:wrap; }
+    .chip { display:flex; align-items:center; gap:7px; border:1.5px solid var(--sand); padding:9px 16px; cursor:pointer; font-size:12px; border-radius:1px; transition:.2s; color:var(--navy); }
+    .chip input { accent-color:var(--gold); width:13px; height:13px; cursor:pointer; }
+    .chip:has(input:checked) { border-color:var(--gold); background:rgba(201,168,76,.07); color:var(--gold); }
+
+    /* select custom */
+    .sel-wrap { position:relative; }
+    .sel-wrap::after { content:'▾'; position:absolute; right:14px; top:50%; transform:translateY(-50%); color:var(--gold); pointer-events:none; }
+    select { appearance:none; -webkit-appearance:none; cursor:pointer; }
+
+    /* range */
+    input[type="range"] { appearance:none; -webkit-appearance:none; height:3px; background:var(--sand); border:none; padding:0; border-radius:2px; }
+    input[type="range"]::-webkit-slider-thumb { -webkit-appearance:none; width:16px; height:16px; border-radius:50%; background:var(--gold); cursor:pointer; border:2px solid var(--ivory-lt); }
+    .range-row { display:flex; justify-content:space-between; font-size:10px; color:var(--muted); margin-top:6px; }
+
+    /* checkbox */
+    .cbox { display:flex; align-items:flex-start; gap:10px; }
+    .cbox input { width:15px; height:15px; accent-color:var(--gold); margin-top:3px; flex-shrink:0; cursor:pointer; }
+    .cbox span { font-size:12px; color:var(--muted); line-height:1.7; }
+    .cbox a { color:var(--gold); }
+
+    /* color */
+    input[type="color"] { width:48px; height:36px; padding:3px; border:1.5px solid var(--sand); cursor:pointer; background:var(--ivory-lt); border-radius:2px; }
+
+    /* file */
+    input[type="file"] { font-size:12px; color:var(--muted); border:1.5px dashed var(--sand); padding:14px; cursor:pointer; background:var(--ivory-lt); border-radius:2px; }
+
+    /* info panel */
+    .info-panel { position:sticky; top:90px; }
+    .info-block { margin-bottom:28px; }
+    .info-label { font-size:10px; font-weight:600; letter-spacing:.22em; text-transform:uppercase; color:var(--gold); margin-bottom:8px; }
+    .info-block p, .info-block a { font-size:14px; color:var(--navy); line-height:1.7; }
+    .info-block a:hover { color:var(--gold); }
+
+    /* map */
+    .map-frame { border:1.5px solid var(--sand); overflow:hidden; margin-top:40px; }
+    .map-frame iframe { display:block; width:100%; height:300px; border:none; }
+    .map-link { display:block; text-align:center; padding:10px; font-size:11px; color:var(--muted); border-top:1px solid var(--sand); }
+    .map-link:hover { color:var(--gold); }
+
+    /* faq */
+    .faq { margin-top:72px; }
+    .faq-item { border-top:1px solid var(--sand); }
+    .faq-item:last-child { border-bottom:1px solid var(--sand); }
+    .faq-item summary { display:flex; justify-content:space-between; align-items:center; padding:20px 0; cursor:pointer; list-style:none; font-family:var(--serif); font-size:16px; gap:16px; }
+    .faq-item summary::-webkit-details-marker { display:none; }
+    .faq-item details[open] summary { color:var(--gold); }
+    .faq-toggle { transition:transform .3s; font-size:20px; color:var(--muted); flex-shrink:0; }
+    .faq-item details[open] .faq-toggle { transform:rotate(45deg); color:var(--gold); }
+    .faq-body { padding:0 0 20px; font-size:13px; color:var(--muted); line-height:1.9; }
+  </style>
+</head>
+<body class="page-body">
+<script src="../js/shared-nav.js"></script>
+
+<section class="page-hero" data-title="Contact">
+  <div class="page-hero-bg"></div>
+  <div class="container">
+    <span class="eyebrow">Votre projet de voyage</span>
+    <h1>Parlons de votre<br/>prochaine aventure</h1>
+    <p>Devis gratuit · Réponse sous 24h · Sans engagement</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="contact-layout">
+
+      <!-- FORM -->
+      <div>
+        <span class="eyebrow reveal">Formulaire de contact</span>
+        <h2 class="reveal d1" style="margin-bottom:40px">Décrivez votre rêve</h2>
+
+        <form id="contact-form" novalidate autocomplete="on">
+
+          <div class="form-grid-2">
+            <div class="form-field reveal"><label for="p">Prénom <span class="req">*</span></label>
+              <input type="text" id="p" name="prenom" required placeholder="Marie" autocomplete="given-name" />
+            </div>
+            <div class="form-field reveal d1"><label for="n">Nom <span class="req">*</span></label>
+              <input type="text" id="n" name="nom" required placeholder="Martin" autocomplete="family-name" />
+            </div>
+          </div>
+
+          <div class="form-grid-2">
+            <div class="form-field reveal"><label for="em">E-mail <span class="req">*</span></label>
+              <input type="email" id="em" name="email" required placeholder="marie@exemple.fr" autocomplete="email" />
+            </div>
+            <div class="form-field reveal d1"><label for="tel">Téléphone</label>
+              <input type="tel" id="tel" name="telephone" placeholder="+33 6 00 00 00 00" autocomplete="tel"
+                     pattern="^(?:(?:\+|00)33|0)\s*[1-9](?:[\s.-]?\d{2}){4}$" />
+            </div>
+          </div>
+
+          <div class="form-field reveal"><label for="pays">Pays de résidence</label>
+            <div class="sel-wrap">
+              <select id="pays" name="pays" autocomplete="country">
+                <option value="" disabled selected>— Sélectionner —</option>
+                <option>France</option><option>Belgique</option><option>Suisse</option>
+                <option>Luxembourg</option><option>Maroc</option><option>Canada</option><option>Autre</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-field reveal"><label>Destination souhaitée <span class="req">*</span></label>
+            <div class="chips">
+              <label class="chip"><input type="radio" name="dest" value="asie" required />🌏 Asie</label>
+              <label class="chip"><input type="radio" name="dest" value="afrique" />🌍 Afrique</label>
+              <label class="chip"><input type="radio" name="dest" value="amerique" />🌎 Amériques</label>
+              <label class="chip"><input type="radio" name="dest" value="arctique" />❄️ Arctique</label>
+              <label class="chip"><input type="radio" name="dest" value="oceanie" />🌊 Océanie</label>
+              <label class="chip"><input type="radio" name="dest" value="autre" />✦ Pas encore sûr(e)</label>
+            </div>
+          </div>
+
+          <div class="form-grid-2">
+            <div class="form-field reveal"><label for="dep">Date de départ souhaitée</label>
+              <input type="date" id="dep" name="depart" autocomplete="off" />
+            </div>
+            <div class="form-field reveal d1"><label for="dur">Durée (jours)</label>
+              <input type="number" id="dur" name="duree" min="3" max="90" placeholder="14" />
+            </div>
+          </div>
+
+          <div class="form-grid-2">
+            <div class="form-field reveal"><label for="voy">Nombre de voyageurs</label>
+              <input type="number" id="voy" name="voyageurs" min="1" max="50" placeholder="2" />
+            </div>
+            <div class="form-field reveal d1"><label for="bud">Budget total estimé</label>
+              <div class="sel-wrap">
+                <select id="bud" name="budget" autocomplete="off">
+                  <option value="" disabled selected>— Choisir —</option>
+                  <option>Moins de 3 000 €</option>
+                  <option>3 000 – 8 000 €</option>
+                  <option>8 000 – 20 000 €</option>
+                  <option>20 000 – 50 000 €</option>
+                  <option>Plus de 50 000 €</option>
+                  <option>Je ne sais pas encore</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-field reveal"><label for="conf">Niveau de confort souhaité
+            <span id="conf-val" style="color:var(--gold);font-size:10px"> — Standard</span></label>
+            <input type="range" id="conf" name="confort" min="0" max="2" step="1" value="1" />
+            <div class="range-row"><span>Aventure / Bivouac</span><span>Standard</span><span>Luxe & exclusif</span></div>
+          </div>
+
+          <div class="form-field reveal"><label for="col">Couleur ou ambiance préférée (mood)</label>
+            <div style="display:flex;align-items:center;gap:12px">
+              <input type="color" id="col" name="couleur_mood" value="#0d1b2e" />
+              <span id="col-val" style="font-size:12px;color:var(--muted)">#0d1b2e</span>
+            </div>
+          </div>
+
+          <div class="form-field reveal"><label for="src">Comment nous avez-vous découverts ?</label>
+            <div class="sel-wrap">
+              <select id="src" name="source" autocomplete="off">
+                <option value="" disabled selected>— Choisir —</option>
+                <option>Google</option><option>Instagram</option><option>Recommandation</option>
+                <option>Presse</option><option>Salon du voyage</option><option>Autre</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-field reveal"><label for="msg">Votre message <span class="req">*</span></label>
+            <textarea id="msg" name="message" required maxlength="1500"
+                      placeholder="Dites-nous tout : vos envies, vos craintes, vos rêves, les expériences incontournables pour vous…"></textarea>
+            <div style="text-align:right;font-size:10px;color:var(--muted);margin-top:4px" id="msg-cnt">0 / 1500</div>
+          </div>
+
+          <div class="form-field reveal"><label for="fi">Joindre un document de référence</label>
+            <input type="file" id="fi" name="fichier" accept=".pdf,.doc,.docx,.jpg,.png" />
+            <span style="font-size:10px;color:var(--muted);margin-top:4px">PDF, Word, image — max 10 Mo</span>
+          </div>
+
+          <div class="form-field reveal"><label class="cbox">
+            <input type="checkbox" name="rgpd" required />
+            <span>J'accepte que mes données soient traitées conformément à la <a href="#">politique de confidentialité</a> de Vela Voyages. <span class="req">*</span></span>
+          </label></div>
+          <div class="form-field reveal"><label class="cbox">
+            <input type="checkbox" name="newsletter" />
+            <span>Je souhaite recevoir des inspirations de voyages et les actualités de Vela Voyages.</span>
+          </label></div>
+
+          <div style="display:flex;justify-content:flex-end;margin-top:8px" class="reveal">
+            <button type="submit" class="btn btn-fill"><span>Envoyer ma demande →</span></button>
+          </div>
+
+        </form>
+      </div>
+
+      <!-- INFO PANEL -->
+      <aside class="info-panel" aria-label="Coordonnées">
+        <span class="eyebrow reveal">Nous trouver</span>
+
+        <div class="info-block reveal d1">
+          <div class="info-label">Adresse</div>
+          <p>8 avenue des Voyageurs<br/>75008 Paris, France</p>
+        </div>
+        <div class="info-block reveal d2">
+          <div class="info-label">Téléphone</div>
+          <a href="tel:+33145000000">+33 1 45 00 00 00</a>
+        </div>
+        <div class="info-block reveal d3">
+          <div class="info-label">E-mail</div>
+          <a href="mailto:bonjour@vela-voyages.fr">bonjour@vela-voyages.fr</a>
+        </div>
+        <div class="info-block reveal d4">
+          <div class="info-label">Horaires d'ouverture</div>
+          <p>Lun – Ven : 9h – 18h30<br/>Samedi : 10h – 16h</p>
+        </div>
+        <div class="info-block reveal">
+          <div class="info-label">Urgences en voyage</div>
+          <p>Ligne 24h/24 : <a href="tel:+33145000001">+33 1 45 00 00 01</a></p>
+        </div>
+
+        <div class="map-frame reveal">
+          <iframe src="https://www.openstreetmap.org/export/embed.html?bbox=2.2900%2C48.8700%2C2.3300%2C48.8850&layer=mapnik&marker=48.8766%2C2.3079"
+                  title="Vela Voyages — 8 avenue des Voyageurs, Paris 75008"
+                  loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+          <a class="map-link" href="https://www.openstreetmap.org/?mlat=48.8766&mlon=2.3079" target="_blank" rel="noopener">Voir en plein écran ↗</a>
+        </div>
+      </aside>
+    </div>
+
+    <!-- FAQ -->
+    <section class="faq" aria-labelledby="faq-h">
+      <h2 id="faq-h" class="reveal" style="margin-bottom:0">Questions fréquentes</h2>
+      <div style="margin-top:36px">
+        <div class="faq-item reveal"><details><summary>Votre service est-il vraiment gratuit ?<span class="faq-toggle">+</span></summary><p class="faq-body">Le devis et le conseil initial sont totalement gratuits et sans engagement. Des frais de dossier (120 €) s'appliquent uniquement sur la formule Confort, une fois le voyage confirmé.</p></details></div>
+        <div class="faq-item reveal"><details><summary>Combien de temps faut-il pour préparer un voyage ?<span class="faq-toggle">+</span></summary><p class="faq-body">Nous vous envoyons une première proposition sous 48–72h. La préparation complète prend généralement 2 à 4 semaines. Pour les expéditions complexes (Antarctique, Bhoutan), comptez 2 à 3 mois.</p></details></div>
+        <div class="faq-item reveal"><details><summary>Que se passe-t-il si je dois annuler ?<span class="faq-toggle">+</span></summary><p class="faq-body">Nos conditions d'annulation sont transparentes et détaillées dès le devis. Nous recommandons systématiquement une assurance annulation, que nous pouvons inclure dans votre forfait.</p></details></div>
+        <div class="faq-item reveal"><details><summary>Organisez-vous des voyages en groupe ?<span class="faq-toggle">+</span></summary><p class="faq-body">Oui, nous gérons des groupes à partir de 4 personnes jusqu'à 25. Des tarifs dégressifs s'appliquent. Contactez-nous pour un devis groupe.</p></details></div>
+      </div>
+    </section>
+
+  </div>
+</section>
+
+<script src="../js/main.js"></script>
+<script>
+  const col = document.getElementById('col');
+  const colV = document.getElementById('col-val');
+  if (col) col.addEventListener('input', () => colV.textContent = col.value);
+
+  const rng = document.getElementById('conf');
+  const rngV = document.getElementById('conf-val');
+  const rngT = [' — Aventure', ' — Standard', ' — Luxe'];
+  if (rng) rng.addEventListener('input', () => rngV.textContent = rngT[rng.value]);
+
+  const msg = document.getElementById('msg');
+  const cnt = document.getElementById('msg-cnt');
+  if (msg) msg.addEventListener('input', () => cnt.textContent = `${msg.value.length} / 1500`);
+
+  const dl = document.getElementById('dep');
+  if (dl) dl.min = new Date().toISOString().split('T')[0];
+</script>
+</body>
+</html>

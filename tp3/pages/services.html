@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Destinations — Vela Voyages</title>
+  <meta name="description" content="Explorez toutes les destinations proposées par Vela Voyages : Asie, Afrique, Amériques, Arctique, Océanie. Voyages sur-mesure pour chaque envie." />
+  <meta property="og:title" content="Destinations — Vela Voyages" />
+  <meta property="og:description" content="Asie, Afrique, Amériques, Arctique, Océanie — sur-mesure." />
+  <meta property="og:image" content="https://picsum.photos/seed/vela-svc-og/1200/630" />
+  <meta property="og:url" content="https://vela-voyages.fr/pages/services.html" />
+  <link rel="canonical" href="https://vela-voyages.fr/pages/services.html" />
+  <link rel="stylesheet" href="../css/style.css" />
+  <style>
+    /* DESTINATION ACCORDION */
+    .dest-list { margin-top: 56px; }
+    .dest-item { border-top: 1px solid var(--sand); }
+    .dest-item:last-child { border-bottom: 1px solid var(--sand); }
+    .dest-item details {}
+    .dest-item summary {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 28px 0; cursor: pointer; list-style: none; gap: 20px;
+    }
+    .dest-item summary::-webkit-details-marker { display: none; }
+    .dest-item summary:hover .dest-title { color: var(--gold); }
+    .dest-item details[open] .dest-title { color: var(--gold); }
+    .dest-item details[open] .dest-toggle { transform: rotate(45deg); color: var(--gold); }
+
+    .dest-sum-left { display: flex; align-items: center; gap: 20px; }
+    .dest-flag { font-size: 28px; }
+    .dest-title { font-family: var(--serif); font-size: clamp(18px,3vw,26px); font-weight: 700; transition: color .2s; }
+    .dest-badges { display: flex; gap: 6px; flex-wrap: wrap; }
+    .badge { font-size: 10px; border: 1px solid var(--sand); padding: 3px 10px; color: var(--muted); }
+    .dest-toggle { font-size: 22px; color: var(--muted); transition: transform .3s, color .2s; flex-shrink: 0; }
+
+    .dest-body { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; padding: 0 0 40px 48px; }
+    .dest-body p { font-size: 13px; color: var(--muted); line-height: 1.9; }
+    .dest-body ul { list-style: none; margin-top: 16px; }
+    .dest-body ul li { font-size: 13px; color: var(--muted); padding: 9px 0; border-bottom: 1px solid var(--sand); display: flex; align-items: center; gap: 10px; }
+    .dest-body ul li::before { content: '✦'; font-size: 8px; color: var(--gold); }
+    .dest-body .dest-img { overflow: hidden; height: 220px; }
+    .dest-body .dest-img img { width:100%; height:100%; object-fit:cover; }
+
+    /* PRICING TABLE */
+    .pricing-wrap { overflow-x: auto; margin-top: 48px; }
+    table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    thead tr { background: var(--navy); }
+    thead th { padding: 16px 20px; font-family: var(--sans); font-size: 11px; letter-spacing: .15em; text-transform: uppercase; color: var(--ivory-lt); text-align: center; }
+    thead th:first-child { text-align: left; }
+    tbody tr { border-bottom: 1px solid var(--sand); transition: background .2s; }
+    tbody tr:hover { background: rgba(201,168,76,.04); }
+    tbody td { padding: 14px 20px; color: var(--muted); text-align: center; vertical-align: middle; }
+    tbody td:first-child { text-align: left; color: var(--navy); font-weight: 500; }
+    .row-group { background: rgba(201,168,76,.06); font-family: var(--serif); font-size: 14px; font-weight: 700; color: var(--gold) !important; vertical-align: middle; text-align: left !important; border-left: 3px solid var(--gold); }
+    .note-row td { text-align: center !important; font-size: 11px; color: var(--muted) !important; font-style: italic; padding: 8px 20px; background: rgba(248,244,236,.5); }
+    .price { font-family: var(--serif); font-size: 16px; font-weight: 700; color: var(--navy) !important; }
+    .check { color: var(--ok); font-size: 16px; }
+    .cross { color: var(--sand); font-size: 16px; }
+    tfoot td { padding: 16px 20px; background: var(--navy-mid); color: var(--muted); font-size: 11px; text-align: center; border-top: 2px solid var(--gold); }
+
+    /* PROCESS */
+    .process { display: grid; grid-template-columns: repeat(5,1fr); gap: 0; margin-top: 56px; position: relative; }
+    .process::before { content:''; position:absolute; top:28px; left:10%; right:10%; height:1px; background:var(--sand); }
+    .proc-step { text-align: center; padding: 0 12px; }
+    .proc-num { width:56px; height:56px; border-radius:50%; background:var(--ivory-lt); border:1.5px solid var(--sand); display:flex; align-items:center; justify-content:center; font-family:var(--serif); font-size:18px; font-weight:700; margin:0 auto 16px; position:relative; z-index:1; transition:.25s; }
+    .proc-step:hover .proc-num { background:var(--gold); border-color:var(--gold); color:var(--navy); }
+    .proc-step h4 { font-size:13px; margin-bottom:6px; }
+    .proc-step p { font-size:11px; color:var(--muted); }
+
+    @media(max-width:768px){
+      .dest-body { grid-template-columns:1fr; padding-left:0; }
+      .dest-body .dest-img { display:none; }
+      .process { grid-template-columns:1fr 1fr; }
+      .process::before { display:none; }
+    }
+    @media(max-width:480px){ .process { grid-template-columns:1fr; } }
+  </style>
+</head>
+<body class="page-body">
+<script src="../js/shared-nav.js"></script>
+
+<section class="page-hero" data-title="Destinations">
+  <div class="page-hero-bg"></div>
+  <div class="container">
+    <span class="eyebrow">Le monde selon Vela</span>
+    <h1>Destinations<br/>& formules</h1>
+    <p>Chaque région du monde, une expertise dédiée.</p>
+  </div>
+</section>
+
+<!-- DESTINATIONS ACCORDION -->
+<section class="section" aria-labelledby="dest-h">
+  <div class="container">
+    <span class="eyebrow reveal">Nos régions phares</span>
+    <h2 id="dest-h" class="reveal d1">Explorer par destination</h2>
+    <div class="dest-list">
+
+      <div class="dest-item reveal">
+        <details>
+          <summary>
+            <div class="dest-sum-left">
+              <span class="dest-flag">🌏</span>
+              <span class="dest-title">Asie du Sud-Est & Extrême-Orient</span>
+              <div class="dest-badges"><span class="badge">Japon</span><span class="badge">Vietnam</span><span class="badge">Thaïlande</span><span class="badge">Bhoutan</span></div>
+            </div>
+            <span class="dest-toggle">+</span>
+          </summary>
+          <div class="dest-body">
+            <div>
+              <p>De la sérénité des temples japonais à l'effervescence de Bangkok, l'Asie offre une palette infinie d'expériences. Nos conseillers y ont vécu et y retournent chaque année pour vous garantir les meilleures adresses.</p>
+              <ul>
+                <li>Japon : Tokyo, Kyoto, Hiroshima, îles Okinawa</li>
+                <li>Vietnam : Hanoi, Halong, Hội An, Saïgon</li>
+                <li>Bhoutan : dernier royaume bouddhiste, quota de touristes</li>
+                <li>Thaïlande : nord montagneux, îles préservées, gastronomie</li>
+                <li>Indonésie : Bali, Lombok, Raja Ampat</li>
+              </ul>
+            </div>
+            <div class="dest-img">
+              <img src="https://picsum.photos/seed/vdest-asia/600/440"
+                   srcset="https://picsum.photos/seed/vdest-asia/400/300 400w, https://picsum.photos/seed/vdest-asia/600/440 600w"
+                   sizes="50vw" alt="Temple au Japon au lever du soleil" width="600" height="440" loading="lazy" />
+            </div>
+          </div>
+        </details>
+      </div>
+
+      <div class="dest-item reveal">
+        <details>
+          <summary>
+            <div class="dest-sum-left">
+              <span class="dest-flag">🌍</span>
+              <span class="dest-title">Afrique — Safari & Nature</span>
+              <div class="dest-badges"><span class="badge">Kenya</span><span class="badge">Tanzanie</span><span class="badge">Rwanda</span><span class="badge">Namibie</span></div>
+            </div>
+            <span class="dest-toggle">+</span>
+          </summary>
+          <div class="dest-body">
+            <div>
+              <p>L'Afrique sauvage, vue de l'intérieur. Nos conseillers connaissent les meilleurs camps de brousse, les lodges où les éléphants passent au crépuscule, et les parcs encore épargnés par le tourisme de masse.</p>
+              <ul>
+                <li>Grande migration du Masaï Mara (juillet–octobre)</li>
+                <li>Gorilles des montagnes au Rwanda & Uganda</li>
+                <li>Désert du Namib & Skeleton Coast</li>
+                <li>Delta de l'Okavango au Botswana</li>
+                <li>Île de Zanzibar & épices de Pemba</li>
+              </ul>
+            </div>
+            <div class="dest-img">
+              <img src="https://picsum.photos/seed/vdest-africa/600/440"
+                   srcset="https://picsum.photos/seed/vdest-africa/400/300 400w, https://picsum.photos/seed/vdest-africa/600/440 600w"
+                   sizes="50vw" alt="Lion dans la savane africaine au coucher du soleil" width="600" height="440" loading="lazy" />
+            </div>
+          </div>
+        </details>
+      </div>
+
+      <div class="dest-item reveal">
+        <details>
+          <summary>
+            <div class="dest-sum-left">
+              <span class="dest-flag">🌎</span>
+              <span class="dest-title">Amériques — Du Grand Nord à la Patagonie</span>
+              <div class="dest-badges"><span class="badge">Pérou</span><span class="badge">Patagonie</span><span class="badge">Canada</span><span class="badge">Mexique</span></div>
+            </div>
+            <span class="dest-toggle">+</span>
+          </summary>
+          <div class="dest-body">
+            <div>
+              <p>Un continent aux contrastes vertigineux : forêts amazoniennes, glaciers patagoniens, déserts andins, villes cosmopolites. Nos itinéraires allient culture et nature avec précision.</p>
+              <ul>
+                <li>Circuit Pérou : Machu Picchu, lac Titicaca, Amazonie</li>
+                <li>Patagonie : Torres del Paine, Perito Moreno, fin du monde</li>
+                <li>Canada : Rocheuses, Yukon, aurores boréales</li>
+                <li>Mexique : Yucatan, Oaxaca, cuisine & art</li>
+                <li>Galápagos : biodiversité unique, croisière sur mesure</li>
+              </ul>
+            </div>
+            <div class="dest-img">
+              <img src="https://picsum.photos/seed/vdest-america/600/440"
+                   srcset="https://picsum.photos/seed/vdest-america/400/300 400w, https://picsum.photos/seed/vdest-america/600/440 600w"
+                   sizes="50vw" alt="Machu Picchu au lever du soleil" width="600" height="440" loading="lazy" />
+            </div>
+          </div>
+        </details>
+      </div>
+
+      <div class="dest-item reveal">
+        <details>
+          <summary>
+            <div class="dest-sum-left">
+              <span class="dest-flag">❄️</span>
+              <span class="dest-title">Arctique, Islande & Grands Froids</span>
+              <div class="dest-badges"><span class="badge">Islande</span><span class="badge">Laponie</span><span class="badge">Svalbard</span><span class="badge">Antarctique</span></div>
+            </div>
+            <span class="dest-toggle">+</span>
+          </summary>
+          <div class="dest-body">
+            <div>
+              <p>Des voyages à couper le souffle dans les régions les plus sauvages de la planète. Aurores boréales, nuits polaires, faune arctique : des expériences réservées à ceux qui osent s'éloigner du confort.</p>
+              <ul>
+                <li>Islande hiver : aurores, geysers, glaciers en raquettes</li>
+                <li>Laponie finlandaise : traîneaux, rennes, cabanes de verre</li>
+                <li>Svalbard : ours polaires, banquise, croisière expédition</li>
+                <li>Antarctique : expédition de 12 à 21 jours, zodiac, manchots</li>
+                <li>Groenland : kayak de mer, iceberg, culture inuit</li>
+              </ul>
+            </div>
+            <div class="dest-img">
+              <img src="https://picsum.photos/seed/vdest-arctic/600/440"
+                   srcset="https://picsum.photos/seed/vdest-arctic/400/300 400w, https://picsum.photos/seed/vdest-arctic/600/440 600w"
+                   sizes="50vw" alt="Aurores boréales en Islande" width="600" height="440" loading="lazy" />
+            </div>
+          </div>
+        </details>
+      </div>
+
+      <div class="dest-item reveal">
+        <details>
+          <summary>
+            <div class="dest-sum-left">
+              <span class="dest-flag">🌊</span>
+              <span class="dest-title">Océanie & Pacifique</span>
+              <div class="dest-badges"><span class="badge">Australie</span><span class="badge">Nouvelle-Zélande</span><span class="badge">Polynésie</span></div>
+            </div>
+            <span class="dest-toggle">+</span>
+          </summary>
+          <div class="dest-body">
+            <div>
+              <p>L'immensité australienne, la beauté maorie de Nouvelle-Zélande, les lagons polynésiens : autant de mondes qui n'ont rien en commun si ce n'est l'extraordinaire.</p>
+              <ul>
+                <li>Australie : Kimberley, Great Barrier Reef, outback</li>
+                <li>Nouvelle-Zélande : fjords de Milford Sound, marae maori</li>
+                <li>Polynésie française : Bora Bora, Rangiroa, Marquises</li>
+                <li>Îles Cook : paradis préservé du Pacifique Sud</li>
+              </ul>
+            </div>
+            <div class="dest-img">
+              <img src="https://picsum.photos/seed/vdest-oceania/600/440"
+                   srcset="https://picsum.photos/seed/vdest-oceania/400/300 400w, https://picsum.photos/seed/vdest-oceania/600/440 600w"
+                   sizes="50vw" alt="Lagon turquoise de Polynésie française" width="600" height="440" loading="lazy" />
+            </div>
+          </div>
+        </details>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- PRICING TABLE -->
+<section class="section" style="background:var(--ivory-lt)" aria-labelledby="tarif-h">
+  <div class="container">
+    <span class="eyebrow reveal">Investissement</span>
+    <h2 id="tarif-h" class="reveal d1">Tarifs indicatifs</h2>
+    <div class="pricing-wrap reveal d2">
+      <table>
+        <caption style="text-align:left;font-size:12px;color:var(--muted);padding-bottom:16px">
+          Prix par personne, en chambre double — vols non inclus sauf mention contraire
+        </caption>
+        <thead>
+          <tr>
+            <th scope="col">Formule / Destination</th>
+            <th scope="col">Confort</th>
+            <th scope="col">Premium</th>
+            <th scope="col">Luxe</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="row-group" rowspan="3">Asie</td>
+            <td colspan="3" class="note-row">Durées indicatives 10–21 jours · Vol non inclus</td>
+          </tr>
+          <tr>
+            <td>Japon 14 jours</td>
+            <td class="price">2 800 €</td>
+            <td class="price">4 900 €</td>
+            <td class="price">9 500 €</td>
+          </tr>
+          <tr>
+            <td>Vietnam 12 jours</td>
+            <td class="price">1 900 €</td>
+            <td class="price">3 200 €</td>
+            <td class="price">5 800 €</td>
+          </tr>
+
+          <tr>
+            <td class="row-group" rowspan="3">Afrique Safari</td>
+            <td colspan="3" class="note-row">Durées 8–14 jours · Vols intérieurs inclus</td>
+          </tr>
+          <tr>
+            <td>Kenya 10 jours</td>
+            <td class="price">3 500 €</td>
+            <td class="price">5 800 €</td>
+            <td class="price">11 000 €</td>
+          </tr>
+          <tr>
+            <td>Rwanda gorilles 8 jours</td>
+            <td class="cross">—</td>
+            <td class="price">6 200 €</td>
+            <td class="price">12 500 €</td>
+          </tr>
+
+          <tr>
+            <td class="row-group" rowspan="3">Amériques</td>
+            <td colspan="3" class="note-row">Durées 12–21 jours · Vol non inclus</td>
+          </tr>
+          <tr>
+            <td>Pérou 12 jours</td>
+            <td class="price">2 200 €</td>
+            <td class="price">3 800 €</td>
+            <td class="price">7 000 €</td>
+          </tr>
+          <tr>
+            <td>Patagonie 14 jours</td>
+            <td class="price">3 100 €</td>
+            <td class="price">5 200 €</td>
+            <td class="price">9 800 €</td>
+          </tr>
+
+          <tr>
+            <td>Frais de dossier (par voyage)</td>
+            <td class="price">120 €</td>
+            <td class="check">Offerts</td>
+            <td class="check">Offerts</td>
+          </tr>
+          <tr>
+            <td>Assistance 24h/24</td>
+            <td class="check">✓</td>
+            <td class="check">✓</td>
+            <td class="check">✓</td>
+          </tr>
+          <tr>
+            <td>Conciergerie voyage</td>
+            <td class="cross">✕</td>
+            <td class="check">✓</td>
+            <td class="check">✓</td>
+          </tr>
+          <tr>
+            <td>Guide privé en local</td>
+            <td class="cross">✕</td>
+            <td class="cross">✕</td>
+            <td class="check">✓</td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="4">Tous prix TTC. Acompte de 30 % à la réservation, solde 45 jours avant départ. Garantie APST incluse.</td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="section" aria-labelledby="proc-h">
+  <div class="container">
+    <span class="eyebrow reveal">Étape par étape</span>
+    <h2 id="proc-h" class="reveal d1">Comment prépare-t-on votre voyage ?</h2>
+    <div class="process">
+      <div class="proc-step reveal"><div class="proc-num">1</div><h4>Entretien</h4><p>On vous écoute pendant 30–45 min pour cerner vos envies profondes.</p></div>
+      <div class="proc-step reveal d1"><div class="proc-num">2</div><h4>Proposition</h4><p>Votre conseiller vous soumet un itinéraire détaillé sous 72h.</p></div>
+      <div class="proc-step reveal d2"><div class="proc-num">3</div><h4>Ajustements</h4><p>On affine jusqu'à ce que tout soit parfait, sans limite de révisions.</p></div>
+      <div class="proc-step reveal d3"><div class="proc-num">4</div><h4>Réservation</h4><p>On prend en charge toutes les réservations, des hôtels aux expériences.</p></div>
+      <div class="proc-step reveal d4"><div class="proc-num">5</div><h4>Sur place</h4><p>Votre conseiller reste joignable 24h/24 pendant tout le voyage.</p></div>
+    </div>
+  </div>
+</section>
+
+<script src="../js/main.js"></script>
+</body>
+</html>

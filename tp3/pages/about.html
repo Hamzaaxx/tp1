@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>L'agence — Vela Voyages</title>
+  <meta name="description" content="Rencontrez l'équipe de Vela Voyages : des passionnés de voyage qui ont parcouru le monde pour vous offrir le meilleur." />
+  <meta property="og:title" content="L'agence — Vela Voyages" />
+  <meta property="og:description" content="Une équipe de passionnés à votre service." />
+  <meta property="og:image" content="https://picsum.photos/seed/vela-about-og/1200/630" />
+  <meta property="og:url" content="https://vela-voyages.fr/pages/about.html" />
+  <link rel="canonical" href="https://vela-voyages.fr/pages/about.html" />
+  <link rel="stylesheet" href="../css/style.css" />
+  <style>
+    .team-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:24px; margin-top:56px; }
+    .member { }
+    .member figure { position:relative; overflow:hidden; aspect-ratio:3/4; margin-bottom:20px; }
+    .member figure img { width:100%; height:100%; object-fit:cover; filter:grayscale(20%); transition:transform .5s, filter .4s; }
+    .member:hover figure img { transform:scale(1.04); filter:grayscale(0); }
+    .member-hover {
+      position:absolute; inset:0;
+      background:linear-gradient(transparent 50%, rgba(13,27,46,.85) 100%);
+      display:flex; flex-direction:column; justify-content:flex-end; padding:24px;
+      opacity:0; transition:opacity .35s;
+    }
+    .member:hover .member-hover { opacity:1; }
+    .member-hover p { font-size:12px; color:rgba(248,244,236,.8); line-height:1.7; max-width:none; }
+    figcaption { padding:0 4px; }
+    .member-name { font-family:var(--serif); font-size:19px; font-weight:700; }
+    .member-role { font-size:11px; letter-spacing:.15em; text-transform:uppercase; color:var(--gold); margin-top:5px; }
+    .member-tags { display:flex; gap:6px; flex-wrap:wrap; margin-top:10px; }
+    .member-tag { font-size:10px; border:1px solid var(--sand); padding:3px 10px; color:var(--muted); border-radius:1px; }
+
+    .values-grid { display:grid; grid-template-columns:1fr 1fr; gap:2px; margin-top:48px; }
+    .val { background:var(--ivory-lt); border:1px solid var(--sand); padding:40px; display:flex; gap:20px; }
+    .val-icon { font-size:28px; flex-shrink:0; }
+    .val h3 { font-size:18px; margin-bottom:8px; }
+    .val p { font-size:13px; color:var(--muted); max-width:none; }
+
+    .timeline { margin-top:56px; position:relative; }
+    .timeline::before { content:''; position:absolute; left:50%; top:0; bottom:0; width:1px; background:rgba(201,168,76,.25); transform:translateX(-50%); }
+    .tl { display:grid; grid-template-columns:1fr 48px 1fr; margin-bottom:48px; }
+    .tl-left { padding-right:36px; text-align:right; }
+    .tl-right { padding-left:36px; }
+    .tl-center { display:flex; justify-content:center; padding-top:4px; }
+    .tl-dot { width:14px; height:14px; border-radius:50%; background:var(--gold); border:3px solid var(--ivory); box-shadow:0 0 0 2px var(--gold); }
+    .tl-year { font-size:10px; letter-spacing:.22em; color:var(--gold); margin-bottom:6px; text-transform:uppercase; }
+    .tl h4 { font-size:16px; margin-bottom:6px; }
+    .tl p { font-size:13px; color:var(--muted); max-width:none; }
+
+    @media(max-width:768px){
+      .team-grid{grid-template-columns:1fr 1fr;}
+      .values-grid{grid-template-columns:1fr;}
+      .timeline::before{left:18px;}
+      .tl{grid-template-columns:28px 1fr;}
+      .tl-left{display:none;}
+      .tl-right{padding-left:20px;}
+      .tl-center{padding-top:4px;}
+    }
+    @media(max-width:480px){ .team-grid{grid-template-columns:1fr;} }
+  </style>
+</head>
+<body class="page-body">
+<script src="../js/shared-nav.js"></script>
+
+<section class="page-hero" data-title="Agence">
+  <div class="page-hero-bg"></div>
+  <div class="container">
+    <span class="eyebrow">Qui sommes-nous</span>
+    <h1>Une équipe de<br/>vrais voyageurs</h1>
+    <p>Chacun de nos conseillers a vécu les destinations qu'il vous recommande.</p>
+  </div>
+</section>
+
+<!-- INTRO -->
+<section class="section">
+  <div class="container" style="display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center">
+    <div>
+      <span class="eyebrow reveal">Notre histoire</span>
+      <h2 class="reveal d1">Fondés sur la passion,<br/>guidés par l'exigence</h2>
+      <p class="reveal d2" style="margin:24px 0">
+        Vela Voyages est née en 2012 d'une conviction simple : le voyage de rêve ne s'achète pas dans un catalogue. Il se construit, échange après échange, avec des gens qui connaissent vraiment les endroits qu'ils proposent.
+      </p>
+      <p class="reveal d3" style="color:var(--muted)">
+        Aujourd'hui, notre équipe de 12 conseillers cumule plus de 200 pays visités. Cette expérience de terrain est notre plus grande richesse — et la vôtre.
+      </p>
+    </div>
+    <div class="reveal d2" style="overflow:hidden">
+      <picture>
+        <source media="(max-width:600px)" srcset="https://picsum.photos/seed/vela-team-intro/600/500 600w" />
+        <img src="https://picsum.photos/seed/vela-team-intro/700/580"
+             srcset="https://picsum.photos/seed/vela-team-intro/500/420 500w, https://picsum.photos/seed/vela-team-intro/700/580 700w"
+             sizes="50vw" alt="L'équipe Vela Voyages en séance de travail"
+             width="700" height="580" loading="lazy" style="width:100%;object-fit:cover" />
+      </picture>
+    </div>
+  </div>
+</section>
+
+<!-- TEAM -->
+<section class="section" style="background:var(--navy)" aria-labelledby="team-h">
+  <div class="container">
+    <span class="eyebrow reveal" style="color:var(--gold)">Notre équipe</span>
+    <h2 id="team-h" class="reveal d1" style="color:var(--ivory-lt)">Vos conseillers</h2>
+    <div class="team-grid">
+
+      <div class="member reveal">
+        <figure>
+          <picture>
+            <source media="(max-width:480px)" srcset="https://picsum.photos/seed/vmem1/400/533 400w" />
+            <img src="https://picsum.photos/seed/vmem1/600/800"
+                 srcset="https://picsum.photos/seed/vmem1/400/533 400w, https://picsum.photos/seed/vmem1/600/800 600w"
+                 sizes="33vw" alt="Portrait d'Isabelle Charon, Fondatrice et experte Asie"
+                 width="600" height="800" loading="lazy" />
+          </picture>
+          <div class="member-hover"><p>15 ans de voyages en Asie. Isabelle parle japonais et mandarin. Elle a fondé Vela après son 8e circuit au Japon.</p></div>
+          <figcaption>
+            <div class="member-name" style="color:var(--ivory-lt)">Isabelle Charon</div>
+            <div class="member-role">Fondatrice · Experte Asie</div>
+            <div class="member-tags">
+              <span class="member-tag" style="border-color:rgba(201,168,76,.3);color:var(--muted)">Japon</span>
+              <span class="member-tag" style="border-color:rgba(201,168,76,.3);color:var(--muted)">Vietnam</span>
+              <span class="member-tag" style="border-color:rgba(201,168,76,.3);color:var(--muted)">Bhoutan</span>
+            </div>
+          </figcaption>
+        </figure>
+      </div>
+
+      <div class="member reveal d1">
+        <figure>
+          <picture>
+            <source media="(max-width:480px)" srcset="https://picsum.photos/seed/vmem2/400/533 400w" />
+            <img src="https://picsum.photos/seed/vmem2/600/800"
+                 srcset="https://picsum.photos/seed/vmem2/400/533 400w, https://picsum.photos/seed/vmem2/600/800 600w"
+                 sizes="33vw" alt="Portrait de Kévin Dubois, Spécialiste Afrique"
+                 width="600" height="800" loading="lazy" />
+          </picture>
+          <div class="member-hover"><p>Kévin a organisé plus de 300 safaris sur 4 continents. L'Afrique est sa deuxième maison.</p></div>
+          <figcaption>
+            <div class="member-name" style="color:var(--ivory-lt)">Kévin Dubois</div>
+            <div class="member-role">Spécialiste Afrique & Safari</div>
+            <div class="member-tags">
+              <span class="member-tag" style="border-color:rgba(201,168,76,.3);color:var(--muted)">Kenya</span>
+              <span class="member-tag" style="border-color:rgba(201,168,76,.3);color:var(--muted)">Tanzanie</span>
+              <span class="member-tag" style="border-color:rgba(201,168,76,.3);color:var(--muted)">Rwanda</span>
+            </div>
+          </figcaption>
+        </figure>
+      </div>
+
+      <div class="member reveal d2">
+        <figure>
+          <picture>
+            <source media="(max-width:480px)" srcset="https://picsum.photos/seed/vmem3/400/533 400w" />
+            <img src="https://picsum.photos/seed/vmem3/600/800"
+                 srcset="https://picsum.photos/seed/vmem3/400/533 400w, https://picsum.photos/seed/vmem3/600/800 600w"
+                 sizes="33vw" alt="Portrait de Camille Arnaud, Experte Amériques"
+                 width="600" height="800" loading="lazy" />
+          </picture>
+          <div class="member-hover"><p>Passionnée de cultures préhispaniques, Camille a traversé l'Amérique du Sud à pied, en bateau et en bus local.</p></div>
+          <figcaption>
+            <div class="member-name" style="color:var(--ivory-lt)">Camille Arnaud</div>
+            <div class="member-role">Experte Amériques</div>
+            <div class="member-tags">
+              <span class="member-tag" style="border-color:rgba(201,168,76,.3);color:var(--muted)">Pérou</span>
+              <span class="member-tag" style="border-color:rgba(201,168,76,.3);color:var(--muted)">Patagonie</span>
+              <span class="member-tag" style="border-color:rgba(201,168,76,.3);color:var(--muted)">Mexique</span>
+            </div>
+          </figcaption>
+        </figure>
+      </div>
+
+      <div class="member reveal">
+        <figure>
+          <picture>
+            <source media="(max-width:480px)" srcset="https://picsum.photos/seed/vmem4/400/533 400w" />
+            <img src="https://picsum.photos/seed/vmem4/600/800"
+                 srcset="https://picsum.photos/seed/vmem4/400/533 400w, https://picsum.photos/seed/vmem4/600/800 600w"
+                 sizes="33vw" alt="Portrait de Romain Fleury, Spécialiste Arctique"
+                 width="600" height="800" loading="lazy" />
+          </picture>
+          <div class="member-hover"><p>Romain a passé deux hivers en Laponie et organisé des expéditions jusqu'en Antarctique.</p></div>
+          <figcaption>
+            <div class="member-name" style="color:var(--ivory-lt)">Romain Fleury</div>
+            <div class="member-role">Spécialiste Grands Froids</div>
+            <div class="member-tags">
+              <span class="member-tag" style="border-color:rgba(201,168,76,.3);color:var(--muted)">Islande</span>
+              <span class="member-tag" style="border-color:rgba(201,168,76,.3);color:var(--muted)">Laponie</span>
+              <span class="member-tag" style="border-color:rgba(201,168,76,.3);color:var(--muted)">Antarctique</span>
+            </div>
+          </figcaption>
+        </figure>
+      </div>
+
+      <div class="member reveal d1">
+        <figure>
+          <picture>
+            <source media="(max-width:480px)" srcset="https://picsum.photos/seed/vmem5/400/533 400w" />
+            <img src="https://picsum.photos/seed/vmem5/600/800"
+                 srcset="https://picsum.photos/seed/vmem5/400/533 400w, https://picsum.photos/seed/vmem5/600/800 600w"
+                 sizes="33vw" alt="Portrait de Nadia El Khattabi, Experte Moyen-Orient"
+                 width="600" height="800" loading="lazy" />
+          </picture>
+          <div class="member-hover"><p>Nadia parle arabe et persan. Elle crée des itinéraires d'exception au Maroc, Iran et Jordanie.</p></div>
+          <figcaption>
+            <div class="member-name" style="color:var(--ivory-lt)">Nadia El Khattabi</div>
+            <div class="member-role">Experte Moyen-Orient & Maghreb</div>
+            <div class="member-tags">
+              <span class="member-tag" style="border-color:rgba(201,168,76,.3);color:var(--muted)">Maroc</span>
+              <span class="member-tag" style="border-color:rgba(201,168,76,.3);color:var(--muted)">Iran</span>
+              <span class="member-tag" style="border-color:rgba(201,168,76,.3);color:var(--muted)">Jordanie</span>
+            </div>
+          </figcaption>
+        </figure>
+      </div>
+
+      <div class="member reveal d2">
+        <figure>
+          <picture>
+            <source media="(max-width:480px)" srcset="https://picsum.photos/seed/vmem6/400/533 400w" />
+            <img src="https://picsum.photos/seed/vmem6/600/800"
+                 srcset="https://picsum.photos/seed/vmem6/400/533 400w, https://picsum.photos/seed/vmem6/600/800 600w"
+                 sizes="33vw" alt="Portrait de Lucas Monnier, Spécialiste Océanie"
+                 width="600" height="800" loading="lazy" />
+          </picture>
+          <div class="member-hover"><p>Lucas a vécu 3 ans en Australie et parcouru chaque île de Polynésie. Il connaît les meilleurs spots encore vierges.</p></div>
+          <figcaption>
+            <div class="member-name" style="color:var(--ivory-lt)">Lucas Monnier</div>
+            <div class="member-role">Spécialiste Océanie</div>
+            <div class="member-tags">
+              <span class="member-tag" style="border-color:rgba(201,168,76,.3);color:var(--muted)">Australie</span>
+              <span class="member-tag" style="border-color:rgba(201,168,76,.3);color:var(--muted)">Polynésie</span>
+              <span class="member-tag" style="border-color:rgba(201,168,76,.3);color:var(--muted)">Nouvelle-Zélande</span>
+            </div>
+          </figcaption>
+        </figure>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- VALUES -->
+<section class="section" aria-labelledby="val-h">
+  <div class="container">
+    <span class="eyebrow reveal">Ce qui nous anime</span>
+    <h2 id="val-h" class="reveal d1">Nos engagements</h2>
+    <div class="values-grid">
+      <div class="val reveal"><div class="val-icon">🌍</div><div><h3>Expertise terrain</h3><p>Chaque conseiller a personnellement vécu les destinations qu'il propose. Zéro recommandation de catalogue.</p></div></div>
+      <div class="val reveal d1"><div class="val-icon">🤝</div><div><h3>Relation de confiance</h3><p>Un seul interlocuteur du premier contact jusqu'au retour. Il vous connaît, vous et vos attentes.</p></div></div>
+      <div class="val reveal d2"><div class="val-icon">♻️</div><div><h3>Tourisme responsable</h3><p>Nous sélectionnons des partenaires locaux engagés et contribuons à 1 % for the Planet.</p></div></div>
+      <div class="val reveal d3"><div class="val-icon">✦</div><div><h3>Satisfaction garantie</h3><p>Si votre voyage ne correspond pas à nos promesses, nous prenons en charge les modifications nécessaires.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- TIMELINE -->
+<section class="section" style="background:var(--navy-mid)" aria-labelledby="hist-h">
+  <div class="container">
+    <span class="eyebrow reveal">Notre parcours</span>
+    <h2 id="hist-h" class="reveal d1" style="color:var(--ivory-lt)">Les étapes de Vela</h2>
+    <div class="timeline">
+      <div class="tl reveal"><div class="tl-left"><div class="tl-year">2012</div><h4 style="color:var(--ivory-lt)">Création de l'agence</h4><p>Isabelle ouvre Vela Voyages avec 3 collaborateurs et une idée fixe : ne jamais envoyer un voyageur quelque part où on n'est pas allé soi-même.</p></div><div class="tl-center"><div class="tl-dot"></div></div><div class="tl-right"></div></div>
+      <div class="tl reveal"><div class="tl-left"></div><div class="tl-center"><div class="tl-dot"></div></div><div class="tl-right"><div class="tl-year">2015</div><h4 style="color:var(--ivory-lt)">500e voyage réalisé</h4><p>Cap symbolique franchi. L'équipe passe à 7 personnes et ouvre un pôle spécialisé Afrique.</p></div></div>
+      <div class="tl reveal"><div class="tl-left"><div class="tl-year">2019</div><h4 style="color:var(--ivory-lt)">Prix du Meilleur TO</h4><p>Récompensés par l'APST pour la qualité de nos itinéraires et notre engagement en faveur du tourisme responsable.</p></div><div class="tl-center"><div class="tl-dot"></div></div><div class="tl-right"></div></div>
+      <div class="tl reveal"><div class="tl-left"></div><div class="tl-center"><div class="tl-dot"></div></div><div class="tl-right"><div class="tl-year">2025</div><h4 style="color:var(--ivory-lt)">2 400 voyageurs accompagnés</h4><p>Vela compte aujourd'hui 12 conseillers, 68 pays couverts et un taux de satisfaction de 4,9/5.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<script src="../js/main.js"></script>
+</body>
+</html>
